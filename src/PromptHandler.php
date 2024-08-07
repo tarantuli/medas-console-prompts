@@ -29,7 +29,7 @@ readonly class PromptHandler
         $result = new Result();
 
         if ($prompt->message()) {
-            $this->printer->print($prompt->message());
+            $this->printer->printLine($prompt->message());
         }
 
         do {
@@ -68,7 +68,7 @@ readonly class PromptHandler
         }
         else {
             if ($prompt->invalidResponseMessage()) {
-                $this->printer->print($prompt->invalidResponseMessage());
+                $this->printer->printLine($prompt->invalidResponseMessage());
             }
 
             $result->invalidResponses[] = $response;
