@@ -1,6 +1,6 @@
 {
-    "name": "morphp/medas-placeholder",
-    "description": "Medas placeholder",
+    "name": "morphp/medas-console-prompts",
+    "description": "Medas console prompts",
     "authors": [
         {
             "name": "Patrick Morpey",
@@ -19,8 +19,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Medas\\Placeholder\\": "src/",
-            "Medas\\PlaceholderTest\\": "tests/"
+            "Medas\\ConsolePrompts\\": "src/",
+            "Medas\\ConsolePromptsTest\\": "tests/"
         }
     }
 }

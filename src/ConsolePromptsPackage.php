@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Medas\Placeholder;
+namespace Medas\ConsolePrompts;
 
 use Medas\Core\AsSingleton;
 use Medas\ServiceManager\BasePackage;
 
-class PlaceholderPackage extends BasePackage
+class ConsolePromptsPackage extends BasePackage
 {
     use AsSingleton;
 
