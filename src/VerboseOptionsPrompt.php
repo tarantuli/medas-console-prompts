@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\ConsolePrompts;
 
-use Medas\Console\{Blocks, Printable, Text};
+use Medas\Console\{Blocks, Formats\Color, Printable, Text};
 
 readonly class VerboseOptionsPrompt extends OptionsPrompt
 {
@@ -22,10 +22,15 @@ readonly class VerboseOptionsPrompt extends OptionsPrompt
             if ($options !== []) {
                 $compoundMessage->blocks[] = Text::create(', ');
             }
+            else {
+                $compoundMessage->blocks[] = Text::create('  ');
+            }
 
             $options[] = $option;
-            $compoundMessage->blocks[] = Text::create($optionMessage);
-            $compoundMessage->blocks[] = Text::create(' [' . $option . ']');
+            $compoundMessage->blocks[] = Text::create($optionMessage, Color::Cyan);
+            $compoundMessage->blocks[] = Text::create(' [');
+            $compoundMessage->blocks[] = Text::create($option, Color::Yellow);
+            $compoundMessage->blocks[] = Text::create(']');
         }
 
         parent::__construct(
