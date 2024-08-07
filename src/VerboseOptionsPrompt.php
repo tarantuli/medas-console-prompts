@@ -24,7 +24,7 @@ readonly class VerboseOptionsPrompt extends OptionsPrompt
             }
 
             $options[] = $option;
-            $compoundMessage->blocks[] = $optionMessage;
+            $compoundMessage->blocks[] = Text::create($optionMessage);
             $compoundMessage->blocks[] = Text::create(' [' . $option . ']');
         }
 
