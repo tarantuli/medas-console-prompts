@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "653c98d96ef052e0a5597d2b8a144177",
+    "content-hash": "3b6e859decf83ecaa6b8d7811b3249f8",
     "packages": [
         {
             "name": "morphp/medas-core",
@@ -184,12 +184,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:tarantuli/medas-console.git",
-                "reference": "6373066b1ad685c0745d12dd9cf347e7fc045711"
+                "reference": "14b3527ad320f35f4ea7560fd1bdaa5ef4f847c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-console/zipball/6373066b1ad685c0745d12dd9cf347e7fc045711",
-                "reference": "6373066b1ad685c0745d12dd9cf347e7fc045711",
+                "url": "https://api.github.com/repos/tarantuli/medas-console/zipball/14b3527ad320f35f4ea7560fd1bdaa5ef4f847c8",
+                "reference": "14b3527ad320f35f4ea7560fd1bdaa5ef4f847c8",
                 "shasum": ""
             },
             "require": {
@@ -225,7 +225,54 @@
                 "source": "https://github.com/tarantuli/medas-console/tree/dev",
                 "issues": "https://github.com/tarantuli/medas-console/issues"
             },
-            "time": "2024-03-14T19:34:56+00:00"
+            "time": "2024-08-07T09:26:36+00:00"
+        },
+        {
+            "name": "morphp/medas-console-printer",
+            "version": "dev-dev",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:tarantuli/medas-console-printer.git",
+                "reference": "33d30885b207e50f212aa4c240598afe37569ba6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tarantuli/medas-console-printer/zipball/33d30885b207e50f212aa4c240598afe37569ba6",
+                "reference": "33d30885b207e50f212aa4c240598afe37569ba6",
+                "shasum": ""
+            },
+            "require": {
+                "morphp/medas-console": "dev-dev",
+                "morphp/medas-core": "dev-dev",
+                "morphp/medas-service-manager": "dev-dev"
+            },
+            "require-dev": {
+                "morphp/medas-config-manager": "dev-dev",
+                "morphp/medas-config-options": "dev-dev",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Medas\\ConsolePrinter\\": "src/",
+                    "Medas\\ConsolePrinterTest\\": "tests/"
+                }
+            },
+            "authors": [
+                {
+                    "name": "Patrick Morpey",
+                    "email": "patrick@morphp.nl"
+                }
+            ],
+            "description": "Medas console printer",
+            "keywords": [
+                "console"
+            ],
+            "support": {
+                "source": "https://github.com/tarantuli/medas-console-printer/tree/dev",
+                "issues": "https://github.com/tarantuli/medas-console-printer/issues"
+            },
+            "time": "2024-08-07T09:28:14+00:00"
         },
         {
             "name": "morphp/medas-object-instantiator",
@@ -1997,6 +2044,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "morphp/medas-core": 20,
+        "morphp/medas-console-printer": 20,
         "morphp/medas-service-manager": 20
     },
     "prefer-stable": true,
