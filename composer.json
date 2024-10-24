@@ -1,6 +1,9 @@
 {
     "name": "morphp/medas-console-prompts",
     "description": "Medas console prompts",
+    "keywords": [
+        "console"
+    ],
     "authors": [
         {
             "name": "Patrick Morpey",
