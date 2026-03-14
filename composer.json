@@ -1,31 +1,33 @@
 {
-    "name": "morphp/medas-console-prompts",
-    "description": "Medas console prompts",
-    "keywords": [
-        "console"
-    ],
-    "authors": [
-        {
-            "name": "Patrick Morpey",
-            "email": "patrick@morphp.nl"
-        }
-    ],
-    "type": "library",
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "require": {
-        "morphp/medas-core": "dev-dev"
-    },
-    "require-dev": {
-        "morphp/medas-console-printer": "dev-dev",
-        "morphp/medas-service-manager": "dev-dev",
-        "phpunit/phpunit": "^9.5"
-    },
-    "autoload": {
-        "psr-4": {
-            "Medas\\ConsolePrompts\\": "src/",
-            "Medas\\ConsolePromptsTest\\": "tests/"
-        }
+  "name": "morphp/medas-console-prompts",
+  "description": "Medas console prompts",
+  "keywords": [
+    "console"
+  ],
+  "authors": [
+    {
+      "name": "Patrick Morpey",
+      "email": "patrick@morphp.nl"
     }
+  ],
+  "type": "library",
+  "require": {
+    "morphp/medas-core": "^3"
+  },
+  "require-dev": {
+    "morphp/medas-console-printer": "^3",
+    "morphp/medas-service-manager": "^3",
+    "phpunit/phpunit": "^10"
+  },
+  "autoload": {
+    "psr-4": {
+      "Medas\\ConsolePrompts\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Medas\\ConsolePromptsTest\\": "tests/"
+    }
+  }
 }
 
