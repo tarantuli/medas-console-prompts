@@ -12,6 +12,7 @@
   ],
   "type": "library",
   "require": {
+    "morphp/medas-console": "^3",
     "morphp/medas-core": "^3"
   },
   "require-dev": {
