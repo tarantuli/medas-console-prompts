@@ -47,6 +47,9 @@ readonly class PromptHandler
             if ($prompt->prompt()) {
                 $this->printer->print($prompt->prompt());
             }
+            else {
+                $this->printer->print(Text::create('> ', SafeColor::DarkYellow));
+            }
 
             $response = fgets($this->stdin);
 

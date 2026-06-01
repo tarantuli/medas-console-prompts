@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "morphp/medas-console",
-            "version": "v3.2.2",
+            "version": "v3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tarantuli/medas-console.git",
-                "reference": "b1df2cc54858f14aa64bf27ae702b06ed7898771"
+                "reference": "f97f1350937b5540b9dbfd798a1cc9cf1bbc70a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-console/zipball/b1df2cc54858f14aa64bf27ae702b06ed7898771",
-                "reference": "b1df2cc54858f14aa64bf27ae702b06ed7898771",
+                "url": "https://api.github.com/repos/tarantuli/medas-console/zipball/f97f1350937b5540b9dbfd798a1cc9cf1bbc70a3",
+                "reference": "f97f1350937b5540b9dbfd798a1cc9cf1bbc70a3",
                 "shasum": ""
             },
             "require": {
@@ -49,10 +49,10 @@
                 "console"
             ],
             "support": {
-                "source": "https://github.com/tarantuli/medas-console/tree/v3.2.2",
+                "source": "https://github.com/tarantuli/medas-console/tree/v3.2.3",
                 "issues": "https://github.com/tarantuli/medas-console/issues"
             },
-            "time": "2026-05-21T10:01:18+00:00"
+            "time": "2026-06-01T10:09:27+00:00"
         },
         {
             "name": "morphp/medas-core",
@@ -157,16 +157,16 @@
     "packages-dev": [
         {
             "name": "morphp/medas-console-printer",
-            "version": "v3.0.18",
+            "version": "v3.0.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tarantuli/medas-console-printer.git",
-                "reference": "44d26369c6421987a559c22c5c04d420ee9297c8"
+                "reference": "f5059fe8af2dc6720527b1c3ebb10a419cb1fb09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tarantuli/medas-console-printer/zipball/44d26369c6421987a559c22c5c04d420ee9297c8",
-                "reference": "44d26369c6421987a559c22c5c04d420ee9297c8",
+                "url": "https://api.github.com/repos/tarantuli/medas-console-printer/zipball/f5059fe8af2dc6720527b1c3ebb10a419cb1fb09",
+                "reference": "f5059fe8af2dc6720527b1c3ebb10a419cb1fb09",
                 "shasum": ""
             },
             "require": {
@@ -203,10 +203,10 @@
                 "console"
             ],
             "support": {
-                "source": "https://github.com/tarantuli/medas-console-printer/tree/v3.0.18",
+                "source": "https://github.com/tarantuli/medas-console-printer/tree/v3.0.19",
                 "issues": "https://github.com/tarantuli/medas-console-printer/issues"
             },
-            "time": "2026-05-27T12:48:38+00:00"
+            "time": "2026-06-01T10:10:19+00:00"
         },
         {
             "name": "morphp/medas-service-manager",
