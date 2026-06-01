@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Medas\ConsolePrompts;
 
-use Medas\Console\Printer;
+use Medas\Console\{Formats\SafeColor, Printer, Text};
 use Medas\Core\Attributes\Service;
 
 #[Service]
@@ -100,6 +100,9 @@ readonly class PromptHandler
         else {
             if ($prompt->invalidResponseMessage()) {
                 $this->printer->printLine($prompt->invalidResponseMessage());
+            }
+            else {
+                $this->printer->printLine(Text::create('Invalid response', SafeColor::Red));
             }
 
             $result->invalidResponses[] = $response;
