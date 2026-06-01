@@ -15,4 +15,8 @@ interface Prompt
     public function isValid(string $response): bool;
 
     public function invalidResponseMessage(): Printable|null;
+
+    public function default(): string|null;
+
+    public function doTrim(): bool;
 }

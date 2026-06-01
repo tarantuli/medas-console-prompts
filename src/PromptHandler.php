@@ -10,18 +10,29 @@ use Medas\Core\Attributes\Service;
 #[Service]
 readonly class PromptHandler
 {
+    /**
+     * @var resource
+     */
     private mixed $stdin;
 
     public function __construct(
         private Printer $printer,
     )
     {
-        $this->stdin = fopen('php://stdin', 'r');
+        $stdin = fopen('php://stdin', 'r');
+
+        if ($stdin === false) {
+            throw new \RuntimeException('Failed to open stdin for reading.');
+        }
+
+        $this->stdin = $stdin;
     }
 
     public function __destruct()
     {
-        fclose($this->stdin);
+        if (is_resource($this->stdin)) {
+            fclose($this->stdin);
+        }
     }
 
     public function handle(Prompt $prompt): Result
@@ -37,7 +48,19 @@ readonly class PromptHandler
                 $this->printer->print($prompt->prompt());
             }
 
-            $response = trim(fgets($this->stdin));
+            $response = fgets($this->stdin);
+
+            if ($response === false) {
+                throw new \RuntimeException('Failed to read from stdin: stream closed or EOF reached.');
+            }
+
+            if ($prompt->doTrim()) {
+                $response = trim($response);
+            }
+
+            if ($response === '' && $prompt->default() !== null) {
+                $response = $prompt->default();
+            }
 
             $this->processResponse($prompt, $response, $result);
         } while (!$result->gotResponse);
@@ -50,6 +73,14 @@ readonly class PromptHandler
         $result = new Result();
 
         foreach ($responses as $response) {
+            if ($prompt->doTrim()) {
+                $response = trim($response);
+            }
+
+            if ($response === '' && $prompt->default() !== null) {
+                $response = $prompt->default();
+            }
+
             $this->processResponse($prompt, $response, $result);
 
             if ($result->gotResponse) {

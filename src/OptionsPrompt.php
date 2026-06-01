@@ -36,4 +36,14 @@ readonly class OptionsPrompt implements Prompt
     {
         return $this->invalidResponseMessage;
     }
+
+    public function default(): string|null
+    {
+        return null;
+    }
+
+    public function doTrim(): bool
+    {
+        return true;
+    }
 }

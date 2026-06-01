@@ -13,6 +13,8 @@ readonly class TextPrompt implements Prompt
         private Printable|null $message = null,
         private Printable|null $prompt = null,
         private Printable|null $invalidResponseMessage = null,
+        private string|null    $default = null,
+        private bool           $doTrim = true,
     )
     {
     }
@@ -35,5 +37,15 @@ readonly class TextPrompt implements Prompt
     public function invalidResponseMessage(): Printable|null
     {
         return $this->invalidResponseMessage;
+    }
+
+    public function default(): string|null
+    {
+        return $this->default;
+    }
+
+    public function doTrim(): bool
+    {
+        return $this->doTrim;
     }
 }
