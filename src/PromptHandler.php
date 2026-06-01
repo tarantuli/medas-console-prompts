@@ -102,7 +102,7 @@ readonly class PromptHandler
                 $this->printer->printLine($prompt->invalidResponseMessage());
             }
             else {
-                $this->printer->printLine(Text::create('Invalid response', SafeColor::Red));
+                $this->printer->printLine(Text::create('Invalid response, please retry:', SafeColor::Red));
             }
 
             $result->invalidResponses[] = $response;
