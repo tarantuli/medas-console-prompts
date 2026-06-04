@@ -15,6 +15,9 @@ readonly class OptionsPrompt implements Prompt
         private Printable|null $invalidResponseMessage = null,
     )
     {
+        if (count($this->options) === 0) {
+            throw new Exceptions\OptionsCannotBeEmpty();
+        }
     }
 
     public function message(): Printable|null
@@ -45,5 +48,10 @@ readonly class OptionsPrompt implements Prompt
     public function doTrim(): bool
     {
         return true;
+    }
+
+    public function options(): array
+    {
+        return $this->options;
     }
 }

@@ -22,7 +22,7 @@ readonly class PromptHandler
         $stdin = fopen('php://stdin', 'r');
 
         if ($stdin === false) {
-            throw new \RuntimeException('Failed to open stdin for reading.');
+            throw new Exceptions\FailedToReadFromStdin();
         }
 
         $this->stdin = $stdin;
@@ -40,7 +40,18 @@ readonly class PromptHandler
         $result = new Result();
 
         if ($prompt->message()) {
-            $this->printer->printLine($prompt->message());
+            $message = $prompt->message();
+            $blocks = [$message];
+
+            if ($prompt instanceof OptionsPrompt) {
+                $blocks = $this->addOptions(
+                    $blocks,
+                    $message instanceof Text ? $message->format : [],
+                    $prompt->options()
+                );
+            }
+
+            $this->printer->printLine(...$blocks);
         }
 
         do {
@@ -54,7 +65,7 @@ readonly class PromptHandler
             $response = fgets($this->stdin);
 
             if ($response === false) {
-                throw new \RuntimeException('Failed to read from stdin: stream closed or EOF reached.');
+                throw new Exceptions\FailedToReadFromStdin();
             }
 
             if ($prompt->doTrim()) {
@@ -69,6 +80,23 @@ readonly class PromptHandler
         } while (!$result->gotResponse);
 
         return $result;
+    }
+
+    private function addOptions(array $blocks, array $messageFormat, array $options): array
+    {
+        $blocks[] = Text::create(' (', ...$messageFormat);
+
+        foreach ($options as $i => $option) {
+            if ($i > 0) {
+                $blocks[] = Text::create(', ', ...$messageFormat);
+            }
+
+            $blocks[] = Text::create($option, SafeColor::Cyan);
+        }
+
+        $blocks[] = Text::create(')', ...$messageFormat);
+
+        return $blocks;
     }
 
     public function handleTest(Prompt $prompt, array $responses): Result
