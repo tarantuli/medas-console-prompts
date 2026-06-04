@@ -91,7 +91,7 @@ readonly class PromptHandler
                 $blocks[] = Text::create(', ', ...$messageFormat);
             }
 
-            $blocks[] = Text::create($option, SafeColor::Cyan);
+            $blocks[] = Text::create((string) $option, SafeColor::Cyan);
         }
 
         $blocks[] = Text::create(')', ...$messageFormat);
