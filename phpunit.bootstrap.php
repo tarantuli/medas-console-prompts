@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-use Medas\ConsolePrinter\ConsolePrinter;
-use Medas\ConsolePrinter\ConsolePrinterPackage;
-use Medas\ConsolePrinter\Tables\TablePrinter;
+use Medas\ConsolePrinter\{ConsolePrinter, ConsolePrinterPackage, Tables\TablePrinter};
 use Medas\ConsolePrompts\ConsolePromptsPackage;
-use Medas\ServiceManager\{ServiceConfig, ServiceManager};
+use Medas\ObjectInstantiator\ObjectInstantiator;
+use Medas\ServiceManager\{ServiceConfigBuilder, ServiceManager};
 
 chdir(__DIR__);
 
-new ServiceManager(function (): ServiceConfig {
-    $config = new ServiceConfig();
+new ServiceManager(function (): ServiceConfigBuilder {
+    $config = new ServiceConfigBuilder(ObjectInstantiator::class);
 
     $config->addPackages([
         ConsolePromptsPackage::instance(),
