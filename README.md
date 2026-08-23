@@ -16,6 +16,8 @@ Three prompt implementations are provided:
 | `OptionsPrompt`        | Only values present in a supplied `array`                                                 |
 | `VerboseOptionsPrompt` | Like `OptionsPrompt`, but auto-renders each option as `Label [key]` inline in the message |
 
+A fourth type, `ListPrompt`, is not a `Prompt` at all -- it collects a *sequence* of free-text lines rather than validating a single response, so it is driven through its own `PromptHandler::handleList()` entry point (with a matching `handleListTest()`).
+
 ## Usage
 
 ### Package developer context
@@ -102,6 +104,32 @@ match ($result->response) {
 };
 ```
 
+**`ListPrompt` — free-text entries collected until a blank line:**
+
+Where the other prompt types resolve to a single `string`, `ListPrompt` reads one line at a
+time and keeps collecting them into an array until the user submits a blank line -- useful
+for "type as many of these as you like" input (tags, aliases, a manual breakdown of a name
+into parts, etc.). It is handled via `PromptHandler::handleList()`, which returns a
+`ListResult` (`$items`, `$invalidResponses`) instead of a `Result`.
+
+```php
+use Medas\Console\Text;
+use Medas\ConsolePrompts\{ListPrompt, PromptHandler};
+
+$result = $this->promptHandler->handleList(new ListPrompt(
+    message: Text::create('Type each artist name, one per line, then press enter on an empty line to finish.'),
+));
+
+$artistNames = $result->items;
+```
+
+By default at least one item is required before a blank line is accepted (`minItems: 1`);
+raise or lower that with the `minItems` constructor argument. A `validator` closure, an
+`invalidResponseMessage`, and a `notEnoughItemsMessage` work exactly like their `TextPrompt`
+counterparts, applied per line. The per-item prompt text defaults to a numbered `1) `, `2) `,
+etc., and can be overridden with a fixed `Printable` or a `fn(int $itemNumber): Printable`
+closure via the `itemPrompt` argument.
+
 **Implementing a custom `Prompt`:**
 
 ```php
@@ -152,6 +180,19 @@ $result = $promptHandler->handleTest(
 // $result->invalidResponses === ['maybe', 'yes']
 ```
 
+`ListPrompt` has the same kind of stdin-free test double, `handleListTest()`, which consumes
+a pre-supplied array of lines and treats a blank entry in that array exactly like a blank
+line from stdin:
+
+```php
+$result = $promptHandler->handleListTest(
+    new ListPrompt(),
+    responses: ['Jam', 'Spoon', ''],
+);
+
+// $result->items === ['Jam', 'Spoon']
+```
+
 **Reading the `Result`:**
 
 ```php
@@ -164,6 +205,9 @@ $value = $result->response;
 $rejected = $result->invalidResponses;
 ```
 
+`ListPrompt` reads back the same way, via `ListResult::$items` and `::$invalidResponses`
+instead of a single `$response`.
+
 ### Backend user context
 
 Prompts are driven entirely by command logic — there is no standalone CLI for this package. They appear as interactive steps inside commands:
@@ -174,6 +218,15 @@ A value already exists for this key.
 Choice: x
 Please enter k, o, or s.
 Choice: o
+```
+
+A `ListPrompt` step looks like this instead, ending as soon as an empty line is submitted:
+
+```
+Type each artist name, one per line, then press enter on an empty line to finish.
+1) Jam
+2) Spoon
+3)
 ```
 
 The loop keeps re-prompting until a valid response is given. There is no timeout or maximum retry count built in; commands that need those behaviours should implement a custom `Prompt`.

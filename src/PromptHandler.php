@@ -139,4 +139,94 @@ readonly class PromptHandler
             $result->invalidResponses[] = $response;
         }
     }
+
+    /**
+     * Repeatedly reads one line at a time, collecting every accepted line into
+     * `ListResult::$items`, until the user submits a blank line (accepted only once
+     * `ListPrompt::minItems()` items have been collected).
+     */
+    public function handleList(ListPrompt $prompt): ListResult
+    {
+        $result = new ListResult();
+
+        if ($prompt->message()) {
+            $this->printer->printLine($prompt->message());
+        }
+
+        while (true) {
+            $itemNumber = count($result->items) + 1;
+
+            $this->printer->print($prompt->itemPrompt($itemNumber));
+
+            $response = fgets($this->stdin);
+
+            if ($response === false) {
+                throw new Exceptions\FailedToReadFromStdin();
+            }
+
+            if ($prompt->doTrim()) {
+                $response = trim($response);
+            }
+
+            if (!$this->processListResponse($prompt, $response, $result)) {
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Like `handleList()`, but consumes a pre-supplied array of lines instead of stdin, for
+     * testing `ListPrompt` logic. A blank entry in `$responses` terminates the list exactly
+     * like an empty line from stdin would.
+     */
+    public function handleListTest(ListPrompt $prompt, array $responses): ListResult
+    {
+        $result = new ListResult();
+
+        foreach ($responses as $response) {
+            if ($prompt->doTrim()) {
+                $response = trim($response);
+            }
+
+            if (!$this->processListResponse($prompt, $response, $result)) {
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    /** @return bool whether to keep collecting more items */
+    private function processListResponse(ListPrompt $prompt, string $response, ListResult $result): bool
+    {
+        if ($response === '') {
+            if (count($result->items) >= $prompt->minItems()) {
+                return false;
+            }
+
+            $this->printer->printLine($prompt->notEnoughItemsMessage() ?? Text::create(
+                'Please enter at least ' . $prompt->minItems() . ' item(s).',
+                SafeColor::Red
+            ));
+
+            return true;
+        }
+
+        if (!$prompt->isValid($response)) {
+            $this->printer->printLine($prompt->invalidResponseMessage() ?? Text::create(
+                'Invalid response, please retry:',
+                SafeColor::Red
+            ));
+
+            $result->invalidResponses[] = $response;
+
+            return true;
+        }
+
+        $result->items[] = $response;
+
+        return true;
+    }
 }
